@@ -34,6 +34,7 @@ public class UserController {
 
 	@PostMapping("/post")
 	public void save(@RequestBody User user) {
+		user.setEmail("oumaima@gmail.com");
 		userService.addUser(user);
 	}
 
