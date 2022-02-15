@@ -32,17 +32,18 @@ public class UserService {
 		userRepository.deleteById(id);
 	}
 
-	public void updateUser(User user, Long id) {
-		List<User> users = userRepository.findAll();
-		for (User us : users) {
-			if (us.getId() == id) {
-				us.setName(user.getName());
-				us.setEmail(user.getEmail());
-				us.setNumMobile(user.getNumMobile());
-				us.setSalary(user.getSalary());
-				userRepository.save(user);
+	public void updateUser(User newUser, Long id) {
+		User currentUser = userRepository.findById(id).get();
+		
+			if (currentUser != null) {
+				currentUser.setName(newUser.getName());
+				currentUser.setEmail(newUser.getEmail());
+				currentUser.setNumMobile(newUser.getNumMobile());
+				currentUser.setSalary(newUser.getSalary());
+				
+				userRepository.saveAndFlush(currentUser);
 			}
-		}
+		
 
 	}
 

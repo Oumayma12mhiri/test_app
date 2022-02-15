@@ -18,7 +18,7 @@ import tn.dksoft.service.UserService;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
-@RequestMapping(value = "/users")
+@RequestMapping(value = "/users/")
 public class UserController {
 
 	private final UserService userService;
@@ -29,23 +29,22 @@ public class UserController {
 		this.userService = userService;
 	}
 
-	@GetMapping("/get")
+	@GetMapping
 	public List<User> get() {
 		return (List<User>) userService.getUser();
 	}
 
-	@PostMapping("/post")
+	@PostMapping
 	public void save(@RequestBody User user) {
-		user.setEmail("oumaima@gmail.com");
 		userService.addUser(user);
 	}
 
-	@PutMapping("/put/{id}")
+	@PutMapping("{id}")
 	public void put(@RequestBody User user, @PathVariable Long id) {
 		userService.updateUser(user, id);
 	}
 
-	@DeleteMapping("/delete/{id}")
+	@DeleteMapping("{id}")
 	public void deleteUser(@PathVariable Long id) {
 		userService.deleteUser(id);
 	}
