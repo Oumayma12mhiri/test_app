@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import tn.dksoft.entity.User;
@@ -19,6 +20,7 @@ import tn.dksoft.service.UserService;
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping(value = "/users/")
+
 public class UserController {
 
 	private final UserService userService;
@@ -29,22 +31,27 @@ public class UserController {
 		this.userService = userService;
 	}
 
-	@GetMapping
-	public List<User> get() {
-		return (List<User>) userService.getUser();
+	@GetMapping("get")
+	public List<User> get(@RequestParam(defaultValue = "0") Integer pageNo, 
+                @RequestParam(defaultValue = "2") Integer pageSize,
+                @RequestParam(defaultValue = "id") String sortBy) {
+           return userService.getAllUser(pageNo, pageSize, sortBy);
 	}
 
 	@PostMapping
+	
 	public void save(@RequestBody User user) {
 		userService.addUser(user);
 	}
 
 	@PutMapping("{id}")
+	
 	public void put(@RequestBody User user, @PathVariable Long id) {
 		userService.updateUser(user, id);
 	}
 
 	@DeleteMapping("{id}")
+	
 	public void deleteUser(@PathVariable Long id) {
 		userService.deleteUser(id);
 	}
